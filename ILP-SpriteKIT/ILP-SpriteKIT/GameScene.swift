@@ -8,6 +8,13 @@
 
 import SpriteKit
 import GameplayKit
+import CoreGraphics
+
+enum IsMoving {
+    case no
+    case right
+    case left
+}
 
 class GameScene: SKScene {
     
@@ -16,37 +23,72 @@ class GameScene: SKScene {
     private var player : SKSpriteNode!
     private var ground : SKSpriteNode!
     
-   
+    private var leftArrow : SKSpriteNode!
+    private var rightArrow : SKSpriteNode!
+    
+    //MARK: Movement
+    var lastTouchLocation : CGPoint?
+    
+    var lastUpdateTime : TimeInterval = 0
+    var dt : TimeInterval = 0
+    
+    let playerSpeedPerSec : CGFloat = 480.0
+    var velocity = CGPoint.zero
+    
+    var eMovement = IsMoving.no
+    
+    //MARK: Gravity
+    let gravityMultiplier : CGFloat = 20
     
     override func didMove(to view: SKView) {
-        playableRect = setPlayableArea(size: self.size)
+        //playableRect = setPlayableArea(size: self.size)
+        
+        leftArrow = SKSpriteNode(color: .yellow, size: CGSize(width: 100, height: 100))
+        leftArrow.position = CGPoint(x: -1100, y: -320)
+        leftArrow.name = "leftArrow"
+        self.addChild(leftArrow)
+        
+        rightArrow = SKSpriteNode(color: .blue, size: CGSize(width: 100, height: 100))
+        rightArrow.position = CGPoint(x: -950, y: -320)
+        rightArrow.name = "rightArrow"
+        self.addChild(rightArrow)
         
         player = SKSpriteNode(color: .red, size: CGSize(width: 50, height: 50))
         player.position = CGPoint(x: 0, y: 300)
         player.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 50, height: 50))
-        player.physicsBody?.isDynamic = true
-        player.physicsBody?.affectedByGravity = true
+        player.physicsBody!.isDynamic = true
+        player.physicsBody!.affectedByGravity = true
+        player.physicsBody!.mass = 100
         self.addChild(player)
         player.zPosition = 1
         
-        
-        ground = SKSpriteNode(color: .white, size: CGSize(width: 200, height: 200))
+        ground = Ground(color: .white, size: CGSize(width: 200, height: 200))
         ground.position = CGPoint(x: 0, y: 0)
-        ground.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 200, height: 200))
-        ground.physicsBody?.isDynamic = false
-        ground.physicsBody?.affectedByGravity = false
         self.addChild(ground)
         ground.zPosition = 2
         
+        let c = Ground(color: .white, size: CGSize(width: 700, height: 30))
+        c.position = CGPoint(x: -1 * view.scene!.size.width/2 + (c.size.width/2), y: -1 * view.scene!.size.height/2 + (c.size.height/2))
+        self.addChild(c)
+        c.zPosition = 2
         //debugPlayableBorder()
     }
+    
+    
+//    func pointModule(point: CGPoint) -> CGFloat{
+//        return CGFloat(sqrt(Double(pow(point.x, 2) + pow(point.y, 2))))
+//    }
+    
+//    func moveSprite(sprite: SKSpriteNode, velocity: CGPoint){
+//        let movement  = CGPoint(x: velocity.x * CGFloat(dt), y: velocity.y * CGFloat(dt))
+//        sprite.position = CGPoint(x: sprite.position.x + movement.x, y: sprite.position.x + movement.y)
+//    }
     
     func setPlayableArea(size: CGSize) -> CGRect{
           let maxAspectRatio : CGFloat = 16.0/9.0
           let playableHeight = size.height/maxAspectRatio
           let playableMargin = (size.height - playableHeight)/2.0
-          print(playableMargin)
-          return CGRect(x:0 - size.width/2, y: playableMargin - playableHeight,width: size.width,height: playableHeight)
+          return CGRect(x:0 - size.width/2, y: -1 * (playableHeight - playableMargin) ,width: size.width,height: playableHeight)
       }
     
     
@@ -65,8 +107,41 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        
+        switch eMovement {
+        case .no:
+            break
+        case .left:
+            player.physicsBody?.velocity = CGVector(dx: -200,dy: physicsWorld.gravity.dy * gravityMultiplier)
+        case .right:
+            player.physicsBody?.velocity = CGVector(dx: 200,dy: physicsWorld.gravity.dy * gravityMultiplier)
+        }
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first
+        let positionInScene = touch?.location(in: self)
+        let touchedNode = self.atPoint(positionInScene ?? CGPoint.zero)
+
+        if let name = touchedNode.name
+        {
+            if name == "leftArrow"
+            {
+                eMovement = .left
+            }
+            else if name == "rightArrow" {
+                eMovement = .right
+            }
+            else {
+                eMovement = .no
+            }
+        }
+
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        eMovement = .no
+    }
+    
 }
 
 

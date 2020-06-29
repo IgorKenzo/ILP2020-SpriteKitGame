@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		050F2B6B24A55E1000218C81 /* TestGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050F2B6A24A55E1000218C81 /* TestGameScene.swift */; };
+		051143EF24AA7B750017773E /* Ground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051143EE24AA7B750017773E /* Ground.swift */; };
 		05BE4778249D5A0900DB23EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BE4777249D5A0900DB23EA /* AppDelegate.swift */; };
 		05BE477A249D5A0900DB23EA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 05BE4779249D5A0900DB23EA /* GameScene.sks */; };
 		05BE477C249D5A0900DB23EA /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 05BE477B249D5A0900DB23EA /* Actions.sks */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		050F2B6A24A55E1000218C81 /* TestGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGameScene.swift; sourceTree = "<group>"; };
+		051143EE24AA7B750017773E /* Ground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ground.swift; sourceTree = "<group>"; };
 		05BE4774249D5A0900DB23EA /* ILP-SpriteKIT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ILP-SpriteKIT.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		05BE4777249D5A0900DB23EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05BE4779249D5A0900DB23EA /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -43,6 +45,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		051143ED24AA7B580017773E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				051143EE24AA7B750017773E /* Ground.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		05BE476B249D5A0900DB23EA = {
 			isa = PBXGroup;
 			children = (
@@ -62,6 +72,7 @@
 		05BE4776249D5A0900DB23EA /* ILP-SpriteKIT */ = {
 			isa = PBXGroup;
 			children = (
+				051143ED24AA7B580017773E /* Model */,
 				05BE4777249D5A0900DB23EA /* AppDelegate.swift */,
 				05BE4779249D5A0900DB23EA /* GameScene.sks */,
 				05BE477B249D5A0900DB23EA /* Actions.sks */,
@@ -153,6 +164,7 @@
 				05BE4780249D5A0900DB23EA /* GameViewController.swift in Sources */,
 				050F2B6B24A55E1000218C81 /* TestGameScene.swift in Sources */,
 				05BE4778249D5A0900DB23EA /* AppDelegate.swift in Sources */,
+				051143EF24AA7B750017773E /* Ground.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
