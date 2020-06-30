@@ -16,15 +16,14 @@ enum IsMoving {
     case left
 }
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var playableRect: CGRect = CGRect()
     
     private var player : SKSpriteNode!
     private var ground : SKSpriteNode!
-    
-    private var leftArrow : SKSpriteNode!
-    private var rightArrow : SKSpriteNode!
+
+    private var enemy : SKSpriteNode!
     
     //MARK: Movement
     var lastTouchLocation : CGPoint?
@@ -37,30 +36,35 @@ class GameScene: SKScene {
     
     var eMovement = IsMoving.no
     
-    //MARK: Gravity
-    let gravityMultiplier : CGFloat = 20
+    //MARK: Collision Mask
+    
+    let playerCategoryBitMask : UInt32 = 0x1 << 0
+    let spikeCategoryBitMask : UInt32 = 0x1 << 1
     
     override func didMove(to view: SKView) {
         //playableRect = setPlayableArea(size: self.size)
+        self.physicsWorld.contactDelegate = self
         
-        leftArrow = SKSpriteNode(color: .yellow, size: CGSize(width: 100, height: 100))
-        leftArrow.position = CGPoint(x: -1100, y: -320)
-        leftArrow.name = "leftArrow"
-        self.addChild(leftArrow)
+        enemy = SKSpriteNode(color: .red, size: CGSize(width: 100, height: 100))
+        enemy.position = CGPoint(x: -950, y: -320)
+        enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
+        enemy.physicsBody!.isDynamic = true
+        enemy.physicsBody!.affectedByGravity = true
+        enemy.name = "enemy"
+        self.addChild(enemy)
+        enemy.zPosition = 2
+        enemy.physicsBody?.categoryBitMask = spikeCategoryBitMask
+        enemy.physicsBody?.contactTestBitMask = playerCategoryBitMask
         
-        rightArrow = SKSpriteNode(color: .blue, size: CGSize(width: 100, height: 100))
-        rightArrow.position = CGPoint(x: -950, y: -320)
-        rightArrow.name = "rightArrow"
-        self.addChild(rightArrow)
-        
-        player = SKSpriteNode(color: .red, size: CGSize(width: 50, height: 50))
+        player = SKSpriteNode(color: .blue, size: CGSize(width: 50, height: 50))
         player.position = CGPoint(x: 0, y: 300)
-        player.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 50, height: 50))
+        player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
         player.physicsBody!.isDynamic = true
         player.physicsBody!.affectedByGravity = true
-        player.physicsBody!.mass = 100
         self.addChild(player)
         player.zPosition = 1
+        player.physicsBody?.categoryBitMask = playerCategoryBitMask
+        player.physicsBody?.collisionBitMask = spikeCategoryBitMask
         
         ground = Ground(color: .white, size: CGSize(width: 200, height: 200))
         ground.position = CGPoint(x: 0, y: 0)
@@ -73,16 +77,6 @@ class GameScene: SKScene {
         c.zPosition = 2
         //debugPlayableBorder()
     }
-    
-    
-//    func pointModule(point: CGPoint) -> CGFloat{
-//        return CGFloat(sqrt(Double(pow(point.x, 2) + pow(point.y, 2))))
-//    }
-    
-//    func moveSprite(sprite: SKSpriteNode, velocity: CGPoint){
-//        let movement  = CGPoint(x: velocity.x * CGFloat(dt), y: velocity.y * CGFloat(dt))
-//        sprite.position = CGPoint(x: sprite.position.x + movement.x, y: sprite.position.x + movement.y)
-//    }
     
     func setPlayableArea(size: CGSize) -> CGRect{
           let maxAspectRatio : CGFloat = 16.0/9.0
@@ -111,30 +105,42 @@ class GameScene: SKScene {
         case .no:
             break
         case .left:
-            player.physicsBody?.velocity = CGVector(dx: -200,dy: physicsWorld.gravity.dy * gravityMultiplier)
+            player.physicsBody?.velocity = CGVector(dx: -200,dy: physicsWorld.gravity.dy)
         case .right:
-            player.physicsBody?.velocity = CGVector(dx: 200,dy: physicsWorld.gravity.dy * gravityMultiplier)
+            player.physicsBody?.velocity = CGVector(dx: 200,dy: physicsWorld.gravity.dy)
         }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         let positionInScene = touch?.location(in: self)
-        let touchedNode = self.atPoint(positionInScene ?? CGPoint.zero)
+        //Touch in some node
+        //let touchedNode = self.atPoint(positionInScene ?? CGPoint.zero)
 
-        if let name = touchedNode.name
-        {
-            if name == "leftArrow"
-            {
-                eMovement = .left
-            }
-            else if name == "rightArrow" {
-                eMovement = .right
-            }
-            else {
-                eMovement = .no
-            }
+//        if let name = touchedNode.name
+//        {
+//            if name == "leftArrow"
+//            {
+//                eMovement = .left
+//            }
+//            else if name == "enemy" {
+//                eMovement = .right
+//            }
+//            else {
+//                eMovement = .no
+//            }
+//        }
+        
+        if positionInScene!.x < 0 {
+            eMovement = .left
         }
+        else if positionInScene!.x > 0 {
+             eMovement = .right
+        }
+        else {
+            eMovement = .no
+        }
+        
 
     }
     
@@ -142,11 +148,25 @@ class GameScene: SKScene {
         eMovement = .no
     }
     
+    func didBegin(_ contact: SKPhysicsContact) {
+        let collision : UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        
+        if collision == playerCategoryBitMask | spikeCategoryBitMask {
+            let lostText = SKLabelNode(fontNamed: "Arial")
+            lostText.text = "You Lost"
+            lostText.fontColor = .systemPink
+            lostText.fontSize = 500
+            lostText.position = CGPoint(x: 0, y: 0)
+            self.addChild(lostText)
+            lostText.zPosition = 4
+        }
+    }
+    
 }
 
 
 
-//// Create shape node to use during mouse interaction
+////Create shape node to   during mouse interaction
 //let w = (self.size.width + self.size.height) * 0.05
 //self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
 //
@@ -158,50 +178,3 @@ class GameScene: SKScene {
 //                                      SKAction.fadeOut(withDuration: 0.5),
 //                                      SKAction.removeFromParent()]))
 //}
-
-
-
-//func touchDown(atPoint pos : CGPoint) {
-//        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-//            n.position = pos
-//            n.strokeColor = SKColor.green
-//            self.addChild(n)
-//        }
-//    }
-//
-//    func touchMoved(toPoint pos : CGPoint) {
-//        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-//            n.position = pos
-//            n.strokeColor = SKColor.blue
-//            self.addChild(n)
-//        }
-//    }
-//
-//    func touchUp(atPoint pos : CGPoint) {
-//        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-//            n.position = pos
-//            n.strokeColor = SKColor.red
-//            self.addChild(n)
-//        }
-//    }
-//
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        if let label = self.label {
-//            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-//        }
-//
-//        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
-//    }
-//
-//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-//    }
-//
-//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-//    }
-//
-//    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-//    }
-//
