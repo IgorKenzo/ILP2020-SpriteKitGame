@@ -15,12 +15,17 @@ enum IsMoving {
     case right
     case left
 }
+//MARK: Collision Mask
+struct CategoryBitMasks {
+    static let player : UInt32  = 0x1 << 0
+    static let spike : UInt32   = 0x1 << 1
+}
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var playableRect: CGRect = CGRect()
     
-    private var player : SKSpriteNode!
+    private var player : SKShapeNode!//SKSpriteNode!
     private var ground : SKSpriteNode!
 
     private var enemy : SKSpriteNode!
@@ -36,46 +41,54 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var eMovement = IsMoving.no
     
-    //MARK: Collision Mask
-    
-    let playerCategoryBitMask : UInt32 = 0x1 << 0
-    let spikeCategoryBitMask : UInt32 = 0x1 << 1
-    
     override func didMove(to view: SKView) {
         //playableRect = setPlayableArea(size: self.size)
         self.physicsWorld.contactDelegate = self
         
-        enemy = SKSpriteNode(color: .red, size: CGSize(width: 100, height: 100))
-        enemy.position = CGPoint(x: -950, y: -320)
-        enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
-        enemy.physicsBody!.isDynamic = true
-        enemy.physicsBody!.affectedByGravity = true
-        enemy.name = "enemy"
+        enemy = NoisySpike(imageNamed: "spike")
+        enemy.size = CGSize(width: 100, height: 100)
+        enemy.position = CGPoint(x: -500, y: -320)
+        //enemy.name = "enemy"
         self.addChild(enemy)
-        enemy.zPosition = 2
-        enemy.physicsBody?.categoryBitMask = spikeCategoryBitMask
-        enemy.physicsBody?.contactTestBitMask = playerCategoryBitMask
+       
         
-        player = SKSpriteNode(color: .blue, size: CGSize(width: 50, height: 50))
-        player.position = CGPoint(x: 0, y: 300)
-        player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
-        player.physicsBody!.isDynamic = true
-        player.physicsBody!.affectedByGravity = true
-        self.addChild(player)
-        player.zPosition = 1
-        player.physicsBody?.categoryBitMask = playerCategoryBitMask
-        player.physicsBody?.collisionBitMask = spikeCategoryBitMask
+        newPlayer()
+        setLightEmitter()
+        
         
         ground = Ground(color: .white, size: CGSize(width: 200, height: 200))
         ground.position = CGPoint(x: 0, y: 0)
         self.addChild(ground)
-        ground.zPosition = 2
         
         let c = Ground(color: .white, size: CGSize(width: 700, height: 30))
         c.position = CGPoint(x: -1 * view.scene!.size.width/2 + (c.size.width/2), y: -1 * view.scene!.size.height/2 + (c.size.height/2))
         self.addChild(c)
         c.zPosition = 2
         //debugPlayableBorder()
+    }
+    
+    func newPlayer(){
+        player = SKShapeNode(circleOfRadius: 50)
+        player.fillColor = .blue
+        player.position = CGPoint(x: 0, y: 300)
+        player.physicsBody = SKPhysicsBody(circleOfRadius: 50)
+        player.physicsBody!.isDynamic = true
+        player.physicsBody!.affectedByGravity = true
+        self.addChild(player)
+        player.zPosition = 1
+        player.physicsBody?.categoryBitMask = CategoryBitMasks.player
+        player.physicsBody?.contactTestBitMask =  CategoryBitMasks.spike
+    }
+    
+    func setLightEmitter()
+    {
+        let light = SKLightNode()
+        light.position = CGPoint(x: 0, y: 0)
+        light.falloff = 7
+        light.ambientColor  = .black
+        light.lightColor = .white
+        
+        player.addChild(light)
     }
     
     func setPlayableArea(size: CGSize) -> CGRect{
@@ -151,14 +164,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         let collision : UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
-        if collision == playerCategoryBitMask | spikeCategoryBitMask {
+        if collision ==  CategoryBitMasks.player |  CategoryBitMasks.spike {
             let lostText = SKLabelNode(fontNamed: "Arial")
             lostText.text = "You Lost"
             lostText.fontColor = .systemPink
-            lostText.fontSize = 500
+            lostText.fontSize = 200
             lostText.position = CGPoint(x: 0, y: 0)
             self.addChild(lostText)
             lostText.zPosition = 4
+              
         }
     }
     

@@ -1,21 +1,24 @@
 //
-//  Ground.swift
+//  NoisySpike.swift
 //  ILP-SpriteKIT
 //
-//  Created by Igor Kenzo Miyamoto Dias on 29/06/20.
+//  Created by Igor Kenzo Miyamoto Dias on 01/07/20.
 //  Copyright © 2020 Igor Miyamoto. All rights reserved.
 //
-import SpriteKit
-import Foundation
 
-class Ground: SKSpriteNode {
+import SpriteKit
+
+class NoisySpike : Spike {
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
-        self.physicsBody = SKPhysicsBody(rectangleOf: size)
-        self.physicsBody?.isDynamic = false
-        self.physicsBody?.affectedByGravity = false
-        self.lightingBitMask = 1
-        zPosition = 2
+        
+        let light = SKLightNode()
+        light.position = CGPoint(x: 0, y: 0)
+        light.falloff = 3
+        light.ambientColor  = .black
+        light.lightColor = .red
+        
+        self.addChild(light)
     }
     
     required init?(coder aDecoder: NSCoder) {
