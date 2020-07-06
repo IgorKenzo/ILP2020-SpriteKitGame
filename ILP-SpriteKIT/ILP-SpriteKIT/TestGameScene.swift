@@ -10,5 +10,8 @@ import Foundation
 import SpriteKit
 
 class TestGameScene: SKScene {
+    override func didMove(to view: SKView) {
+        
+    }
     
 }

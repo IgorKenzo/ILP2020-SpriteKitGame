@@ -16,8 +16,8 @@ class Spike: SKSpriteNode {
         self.physicsBody = SKPhysicsBody(circleOfRadius: 50)
         self.physicsBody?.isDynamic = false
         self.physicsBody?.affectedByGravity = false
-        self.physicsBody?.categoryBitMask = CategoryBitMasks.spike
-        self.physicsBody?.collisionBitMask = CategoryBitMasks.player
+        self.physicsBody?.categoryBitMask = CategoryBitMasks.spike.rawValue
+        self.physicsBody?.collisionBitMask = CategoryBitMasks.player.rawValue
         self.lightingBitMask = 1
         self.zPosition = 2
         
