@@ -9,12 +9,15 @@
 import SpriteKit
 
 class Level {
-    var grounds : [Ground]
+    //Tuple of Ground and Position 
+    var grounds : [(Ground, CGPoint)]
+    var spikes :  [(Spike, CGPoint)]
     var playerSpawn : CGPoint
     var safePoint : CGPoint
     
-    init(grounds : [Ground], playerSpawn : CGPoint, safePoint : CGPoint) {
+    init(grounds : [(Ground, CGPoint)],spikes: [(Spike, CGPoint)], playerSpawn : CGPoint, safePoint : CGPoint) {
         self.grounds = grounds
+        self.spikes = spikes
         self.playerSpawn = playerSpawn
         self.safePoint = safePoint
     }

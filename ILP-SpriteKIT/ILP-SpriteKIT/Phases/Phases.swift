@@ -1,8 +1,8 @@
 //
-//  GameScene.swift
+//  Phases.swift
 //  ILP-SpriteKIT
 //
-//  Created by Igor Kenzo Miyamoto Dias on 19/06/20.
+//  Created by Igor Kenzo Miyamoto Dias on 07/07/20.
 //  Copyright © 2020 Igor Miyamoto. All rights reserved.
 //
 
@@ -11,23 +11,22 @@ import GameplayKit
 import CoreGraphics
 
 
-class GameScene: SKScene, SKPhysicsContactDelegate {
+class Phases: SKScene, SKPhysicsContactDelegate {
     
     private var playableRect: CGRect = CGRect()
     
     private var player : SKShapeNode!//SKSpriteNode!
-    private var ground : SKSpriteNode!
 
-    private var enemy : SKSpriteNode!
+    private var goal : SKShapeNode!
+    
+    private let levelDefinition = LevelDefinitions()
+    
+    private var levelState = LevelState.lvl1
+    
+    private var gameState = GameState.pause
     
     //MARK: Movement
-    var lastTouchLocation : CGPoint?
-    
-    var lastUpdateTime : TimeInterval = 0
-    var dt : TimeInterval = 0
-    
     let playerSpeedPerSec : CGFloat = 480.0
-    var velocity = CGPoint.zero
     
     var eMovement = IsMoving.no
     
@@ -35,31 +34,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //playableRect = setPlayableArea(size: self.size)
         self.physicsWorld.contactDelegate = self
         
-        enemy = NoisySpike(imageNamed: "spike")
-        enemy.size = CGSize(width: 100, height: 100)
-        enemy.position = CGPoint(x: -500, y: -320)
-        //enemy.name = "enemy"
-        self.addChild(enemy)
-       
+//        enemy = NoisySpike(imageNamed: "spike")
+//        enemy.size = CGSize(width: 100, height: 100)
+//        enemy.position = CGPoint(x: -500, y: -320)
+//        self.addChild(enemy)
         
         newPlayer()
         setLightEmitter()
+        goal = FinishGoal.new()
         
-        
-        ground = Ground(color: .white, size: CGSize(width: 200, height: 200))
-        ground.physicsBody?.friction = 2
-        ground.position = CGPoint(x: 0, y: 0)
-        self.addChild(ground)
-        
-        let c = Ground(color: .white, size: CGSize(width: 700, height: 30))
-        c.position = CGPoint(x: -1 * view.scene!.size.width/2 + (c.size.width/2), y: -1 * view.scene!.size.height/2 + (c.size.height/2))
-        self.addChild(c)
-        c.zPosition = 2
-        //debugPlayableBorder()
-        
-        let goal = FinishGoal.new()
-        self.addChild(goal)
+        setPositions()
     }
+    
+    func setPositions() {
+        print(levelState.rawValue)
+        
+        for g in levelDefinition.levels[levelState.rawValue].grounds {
+            g.0.position = g.1
+            self.addChild(g.0)
+        }
+        
+        for s in levelDefinition.levels[levelState.rawValue].spikes {
+            s.0.position = s.1
+            self.addChild(s.0)
+        }
+        
+        
+        player.position = levelDefinition.levels[levelState.rawValue].playerSpawn
+        player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        self.addChild(player)
+        goal.position = levelDefinition.levels[levelState.rawValue].safePoint
+        self.addChild(goal)
+        
+        gameState = GameState.playing
+    }
+    
     
     func newPlayer(){
         player = SKShapeNode(circleOfRadius: 50)
@@ -68,7 +77,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody = SKPhysicsBody(circleOfRadius: 50)
         player.physicsBody!.isDynamic = true
         player.physicsBody!.affectedByGravity = true
-        self.addChild(player)
         player.zPosition = 1
         player.physicsBody?.categoryBitMask = CategoryBitMasks.player.rawValue
         player.physicsBody?.contactTestBitMask =  CategoryBitMasks.spike.rawValue
@@ -103,6 +111,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         shape.lineWidth = 4.0
         addChild(shape)
     }
+
   
 //
     
@@ -121,22 +130,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         let positionInScene = touch?.location(in: self)
-        //Touch in some node
-        //let touchedNode = self.atPoint(positionInScene ?? CGPoint.zero)
-
-//        if let name = touchedNode.name
-//        {
-//            if name == "leftArrow"
-//            {
-//                eMovement = .left
-//            }
-//            else if name == "enemy" {
-//                eMovement = .right
-//            }
-//            else {
-//                eMovement = .no
-//            }
-//        }
         
         if positionInScene!.x < 0 {
             eMovement = .left
@@ -147,8 +140,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else {
             eMovement = .no
         }
-        
-
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -160,43 +151,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let categoryMasks : CategoryBitMasks = [contact.bodyA.category, contact.bodyB.category]
         
-        if categoryMasks.contains([.player,.spike]) {
+        if (categoryMasks.contains([.player,.spike]) && gameState != GameState.lose) {
             if collision ==  CategoryBitMasks.player.rawValue |  CategoryBitMasks.spike.rawValue {
-                let lostText = SKLabelNode(fontNamed: "Arial")
-                lostText.text = "You Lost"
-                lostText.fontColor = .systemPink
-                lostText.fontSize = 200
-                lostText.position = CGPoint(x: 0, y: 0)
-                self.addChild(lostText)
-                lostText.zPosition = 4
-                  
+                
+                gameState = GameState.lose
+                
+                removeNodes()
+                self.setPositions()
+                
             }
         }
         
-        else if (categoryMasks.contains([.player,.finish])){
+        else if (categoryMasks.contains([.player,.finish]) && gameState != GameState.lose){
             if collision == CategoryBitMasks.finish.rawValue | CategoryBitMasks.player.rawValue  {
-                let winText = SKLabelNode(fontNamed: "Arial")
-                winText.text = "You Won"
-                winText.fontColor = .systemGreen
-                winText.fontSize = 200
-                winText.position = CGPoint(x: 0, y: 0)
-                self.addChild(winText)
-                winText.zPosition = 4
+                
+                gameState = GameState.lose
+                
+                removeNodes()
+                self.levelState = LevelState(rawValue: self.levelState.rawValue + 1)!
+                self.setPositions()
+                
             }
         }
     }
     
+    func removeNodes() {
+        player.removeFromParent()
+        goal.removeFromParent()
+        
+        for g in levelDefinition.levels[levelState.rawValue].grounds {
+            g.0.removeFromParent()
+        }
+    }
 }
-
-////Create shape node to   during mouse interaction
-//let w = (self.size.width + self.size.height) * 0.05
-//self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
-//
-//if let spinnyNode = self.spinnyNode {
-//    spinnyNode.lineWidth = 2.5
-//
-//    spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-//    spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-//                                      SKAction.fadeOut(withDuration: 0.5),
-//                                      SKAction.removeFromParent()]))
-//}
