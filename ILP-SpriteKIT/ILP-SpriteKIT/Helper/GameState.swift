@@ -13,7 +13,11 @@ enum GameState {
     case pause
     case win
     case lose
+    case menu
+    
 }
+
+let MAXLEVEL = LevelDefinitions.init().levels.count
 
 enum LevelState : Int {
     case lvl1 = 0

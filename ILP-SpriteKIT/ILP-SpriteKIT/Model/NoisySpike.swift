@@ -14,7 +14,7 @@ class NoisySpike : Spike {
         
         let light = SKLightNode()
         light.position = CGPoint(x: 0, y: 0)
-        light.falloff = 5
+        light.falloff = 4
         light.ambientColor  = .black
         light.lightColor = .red
         
