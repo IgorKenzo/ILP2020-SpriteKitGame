@@ -19,7 +19,7 @@ class Phases: SKScene, SKPhysicsContactDelegate {
     
     private let levelDefinition = LevelDefinitions()
     
-    private var levelState = LevelState.lvl4
+    private var levelState = LevelState.lvl1
     
     private var gameState = GameState.menu
     
@@ -136,6 +136,8 @@ class Phases: SKScene, SKPhysicsContactDelegate {
                 gameState = GameState.lose
                 
                 removeNodes()
+                let sound = SKAction.playSoundFileNamed("nice.m4a", waitForCompletion: false)
+                self.run(sound)
                 self.levelState = LevelState(rawValue: self.levelState.rawValue + 1)!
                 if levelState.rawValue < MAXLEVEL {
                     self.setPositions()
