@@ -10,29 +10,37 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class GameViewController: UIViewController {
+protocol ExitProtocol {
+   func onExitGameScene()
+}
 
+
+class GameViewController: UIViewController, SKSceneDelegate {
+    
+    public func onExitGameScene()
+    {
+        self.performSegue(withIdentifier: "LevelSelectorSegue", sender: self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "MainMenuScene") {
+            if let scene = GameScene(fileNamed: "MainMenuScene") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
-             
                 // Present the scene
                 view.presentScene(scene)
             }
             //let scene = SKScene(size: CGSize(width: 2688, height: 1242))
-            
-            
             //view.presentScene(scene)
             view.ignoresSiblingOrder = true
             //view.showsPhysics = true
             view.showsFPS = true
             view.showsNodeCount = true
             
+           
         }
     }
 
