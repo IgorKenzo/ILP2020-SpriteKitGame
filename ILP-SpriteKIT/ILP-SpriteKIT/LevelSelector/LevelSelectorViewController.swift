@@ -8,24 +8,24 @@
 
 import UIKit
 
-class LevelSelectorViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class LevelSelectorViewController: UICollectionViewController {
 
-    @IBOutlet weak var levelCollectionView: UICollectionView!
+    let dataSource = ["aaaaaaa","aaaaaaa","aaaaaaa"]
     
     override func viewDidLoad() {
-        levelCollectionView.delegate = self
+        //levelCollectionView.delegate = self
         
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-         return 3
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dataSource.count
      }
      
-     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = levelCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for:    indexPath) as! CustomCell
-        
-        cell.lblNumber.text = "\(indexPath.row)"
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for:    indexPath) as! CustomCell
+        //print(indexPath.row)
+        cell.lblNumber.text = dataSource[indexPath.row]
         
         return cell
      }

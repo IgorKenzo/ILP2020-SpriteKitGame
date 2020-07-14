@@ -10,29 +10,39 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-protocol ExitProtocol {
-   func onExitGameScene()
+protocol ActionsDelegate {
+   func loadLevelSelector()
 }
 
 
-class GameViewController: UIViewController, SKSceneDelegate {
+class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
     
-    public func onExitGameScene()
-    {
-        self.performSegue(withIdentifier: "LevelSelectorSegue", sender: self)
-    }
+//    public func onExitGameScene()
+//    {
+//        self.performSegue(withIdentifier: "LevelSelectorSegue", sender: self)
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
-            if let scene = GameScene(fileNamed: "MainMenuScene") {
+//            if let scene = GameScene(fileNamed: "MainMenuScene") {
+//                // Set the scale mode to scale to fit the window
+//                scene.scaleMode = .aspectFill
+//                // Present the scene
+//                view.presentScene(scene)
+//            }
+            
+            
+            let scene = SKScene(fileNamed: "MainMenuScene") as! MainMenu
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
+                scene.actionsDelegate = self
                 // Present the scene
                 view.presentScene(scene)
-            }
+            
+            
             //let scene = SKScene(size: CGSize(width: 2688, height: 1242))
             //view.presentScene(scene)
             view.ignoresSiblingOrder = true
@@ -42,6 +52,15 @@ class GameViewController: UIViewController, SKSceneDelegate {
             
            
         }
+    }
+    
+    func loadLevelSelector()
+    {
+        let level = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "LevelSelectorViewController")
+
+        self.present(level, animated: true, completion: nil)
+        
+        //self.performSegue(withIdentifier: "LevelSelectorSegue", sender: self)
     }
 
     override var shouldAutorotate: Bool {

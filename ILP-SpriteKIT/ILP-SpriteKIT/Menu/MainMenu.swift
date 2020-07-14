@@ -12,6 +12,8 @@ class MainMenu : SKScene {
     var btnProx : Button!
     var btnLevel : Button!
     
+    var actionsDelegate : ActionsDelegate?
+    
     override func didMove(to view: SKView) {
         
         btnProx = self.childNode(withName: "BtnProx") as? Button
@@ -44,6 +46,6 @@ class MainMenu : SKScene {
     
     func loadLevels()
     {
-        
+        self.actionsDelegate?.loadLevelSelector()
     }
 }

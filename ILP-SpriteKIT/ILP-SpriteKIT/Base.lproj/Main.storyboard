@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -20,71 +19,63 @@
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
                     </view>
                     <navigationItem key="navigationItem" id="w7W-Qx-h3d"/>
+                    <connections>
+                        <segue destination="Mjf-yJ-Gna" kind="show" identifier="LevelSelectorSegue" id="lPx-kv-g4R"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="120.53571428571428"/>
         </scene>
         <!--Level Selector View Controller-->
-        <scene sceneID="1Dc-rg-kaA">
+        <scene sceneID="UjE-LV-V08">
             <objects>
-                <viewController storyboardIdentifier="LevelSelector" id="X2W-BB-WIQ" customClass="LevelSelectorViewController" customModule="ILP_SpriteKIT" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="68L-gi-2KW" customClass="LevelSelectorViewController" customModule="ILP_SpriteKIT" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                <collectionViewController storyboardIdentifier="LevelSelectorViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Mjf-yJ-Gna" customClass="LevelSelectorViewController" customModule="ILP_SpriteKIT" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="2SH-ib-x74">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KQ5-We-Xp4">
-                                <rect key="frame" x="0.0" y="64" width="414" height="768"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="414" id="88p-uU-8V8"/>
-                                </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="o8n-8E-kXK">
-                                    <size key="itemSize" width="128" height="128"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="SSm-Jm-VIw" customClass="CustomCell" customModule="ILP_SpriteKIT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="6uE-GB-tiR">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yYz-Dq-frs">
-                                                    <rect key="frame" x="43" y="53" width="42" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </collectionViewCellContentView>
-                                        <connections>
-                                            <outlet property="lblNumber" destination="yYz-Dq-frs" id="M86-s1-6OF"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
-                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="KQ5-We-Xp4" firstAttribute="centerX" secondItem="68L-gi-2KW" secondAttribute="centerX" id="J4G-lc-ng8"/>
-                            <constraint firstItem="KQ5-We-Xp4" firstAttribute="top" secondItem="Qe1-W1-AOO" secondAttribute="top" constant="20" id="aNj-2u-4MX"/>
-                            <constraint firstItem="KQ5-We-Xp4" firstAttribute="centerY" secondItem="68L-gi-2KW" secondAttribute="centerY" id="oRb-Ar-4QO"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="Qe1-W1-AOO"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="n4M-bX-7lC">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="aed-dp-Y2q" customClass="CustomCell" customModule="ILP_SpriteKIT" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="WER-ik-U95">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHy-wn-Ysn">
+                                            <rect key="frame" x="43" y="54" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="gHy-wn-Ysn" firstAttribute="centerX" secondItem="WER-ik-U95" secondAttribute="centerX" id="7J7-Qb-Cfg"/>
+                                        <constraint firstItem="gHy-wn-Ysn" firstAttribute="centerY" secondItem="WER-ik-U95" secondAttribute="centerY" id="LHS-J7-kqc"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="lblNumber" destination="gHy-wn-Ysn" id="bOz-9b-TkE"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
                         <connections>
-                            <outlet property="levelCollectionView" destination="KQ5-We-Xp4" id="Q2H-My-cnv"/>
+                            <outlet property="dataSource" destination="Mjf-yJ-Gna" id="54d-m2-oOX"/>
+                            <outlet property="delegate" destination="Mjf-yJ-Gna" id="4gg-7J-Y9x"/>
                         </connections>
-                    </view>
-                    <navigationItem key="navigationItem" id="e85-LB-lOU"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1Mr-Bl-e3o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="Sf1-Wv-uxH"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nfc-31-cYy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="617" y="798"/>
+            <point key="canvasLocation" x="1167" y="823"/>
         </scene>
     </scenes>
 </document>
