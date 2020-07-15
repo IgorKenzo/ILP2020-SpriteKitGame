@@ -17,7 +17,7 @@ class Phases: SKScene, SKPhysicsContactDelegate {
 
     private var goal : SKShapeNode!
     
-    private let levelDefinition = LevelDefinitions()
+    private let levelDefinition = LevelDefinitions.shared
     
     private var levelState = LevelState.lvl1
     

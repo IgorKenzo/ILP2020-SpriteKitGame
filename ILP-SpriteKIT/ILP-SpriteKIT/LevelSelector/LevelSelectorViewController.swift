@@ -9,23 +9,19 @@
 import UIKit
 
 class LevelSelectorViewController: UICollectionViewController {
-
-    let dataSource = ["aaaaaaa","aaaaaaa","aaaaaaa"]
     
     override func viewDidLoad() {
-        //levelCollectionView.delegate = self
-        
         
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource.count
+        return LevelDefinitions.shared.levels.count
      }
      
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for:    indexPath) as! CustomCell
         //print(indexPath.row)
-        cell.lblNumber.text = dataSource[indexPath.row]
+        cell.defineCell(value: "\(indexPath.row + 1)")
         
         return cell
      }

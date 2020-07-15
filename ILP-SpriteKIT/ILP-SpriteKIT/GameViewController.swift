@@ -24,7 +24,7 @@ class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationController?.navigationBar.isHidden = true
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
 //            if let scene = GameScene(fileNamed: "MainMenuScene") {
@@ -56,11 +56,11 @@ class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
     
     func loadLevelSelector()
     {
-        let level = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "LevelSelectorViewController")
-
-        self.present(level, animated: true, completion: nil)
+//        let level = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "LevelSelectorViewController")
+//
+//        self.present(level, animated: true, completion: nil)
         
-        //self.performSegue(withIdentifier: "LevelSelectorSegue", sender: self)
+        self.performSegue(withIdentifier: "LevelSelectorSegue", sender: self)
     }
 
     override var shouldAutorotate: Bool {

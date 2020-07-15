@@ -17,7 +17,7 @@ enum GameState {
     
 }
 
-let MAXLEVEL = LevelDefinitions.init().levels.count
+let MAXLEVEL = LevelDefinitions.shared.levels.count
 
 enum LevelState : Int {
     case lvl1 = 0

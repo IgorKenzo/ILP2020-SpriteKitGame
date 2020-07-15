@@ -11,4 +11,12 @@ import UIKit
 class CustomCell: UICollectionViewCell {
     
     @IBOutlet weak var lblNumber: UILabel!
+    
+    func defineCell(value : String){
+        lblNumber.text = value
+        
+        self.layer.borderColor = CGColor.init(srgbRed: 1, green: 1, blue: 1, alpha: 1)
+        self.layer.borderWidth = 1
+        self.layer.cornerRadius = 10
+    }
 }
