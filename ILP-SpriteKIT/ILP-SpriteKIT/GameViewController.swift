@@ -17,17 +17,12 @@ protocol ActionsDelegate {
 
 class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
     
-//    public func onExitGameScene()
-//    {
-//        self.performSegue(withIdentifier: "LevelSelectorSegue", sender: self)
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
-//            if let scene = GameScene(fileNamed: "MainMenuScene") {
+//            if let scene = GameScene(fileNamed: "SceneTeste") {
 //                // Set the scale mode to scale to fit the window
 //                scene.scaleMode = .aspectFill
 //                // Present the scene
@@ -36,17 +31,17 @@ class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
             
             
             let scene = SKScene(fileNamed: "MainMenuScene") as! MainMenu
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
-                scene.actionsDelegate = self
-                // Present the scene
-                view.presentScene(scene)
+            // Set the scale mode to scale to fit the window
+            scene.scaleMode = .aspectFill
+            scene.actionsDelegate = self
+            // Present the scene
+            view.presentScene(scene)
             
             
             //let scene = SKScene(size: CGSize(width: 2688, height: 1242))
             //view.presentScene(scene)
             view.ignoresSiblingOrder = true
-            //view.showsPhysics = true
+            view.showsPhysics = true
             view.showsFPS = true
             view.showsNodeCount = true
             

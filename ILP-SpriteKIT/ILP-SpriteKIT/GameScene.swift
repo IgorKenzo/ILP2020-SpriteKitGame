@@ -13,8 +13,6 @@ import CoreGraphics
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    private var playableRect: CGRect = CGRect()
-    
     private var player : SKShapeNode!//SKSpriteNode!
     private var ground : SKSpriteNode!
 
@@ -91,18 +89,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
           let playableMargin = (size.height - playableHeight)/2.0
           return CGRect(x:0 - size.width/2, y: -1 * (playableHeight - playableMargin) ,width: size.width,height: playableHeight)
       }
-    
-    
-    func debugPlayableBorder(){
-        
-        let path = CGMutablePath()
-        path.addRect(playableRect)
-        let shape = SKShapeNode(path: path)
-        shape.path = path
-        shape.strokeColor = .systemRed
-        shape.lineWidth = 4.0
-        addChild(shape)
-    }
   
 //
     
@@ -121,22 +107,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         let positionInScene = touch?.location(in: self)
-        //Touch in some node
-        //let touchedNode = self.atPoint(positionInScene ?? CGPoint.zero)
-
-//        if let name = touchedNode.name
-//        {
-//            if name == "leftArrow"
-//            {
-//                eMovement = .left
-//            }
-//            else if name == "enemy" {
-//                eMovement = .right
-//            }
-//            else {
-//                eMovement = .no
-//            }
-//        }
         
         if positionInScene!.x < 0 {
             eMovement = .left

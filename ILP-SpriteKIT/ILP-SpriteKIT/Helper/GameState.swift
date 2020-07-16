@@ -20,6 +20,7 @@ enum GameState {
 let MAXLEVEL = LevelDefinitions.shared.levels.count
 
 enum LevelState : Int {
+    case none = -1
     case lvl1 = 0
     case lvl2
     case lvl3
@@ -27,4 +28,9 @@ enum LevelState : Int {
     case lvl5
     case lvl6
     case lvl7
+}
+
+class Status {
+    public var gameState = GameState.menu
+    public var levelState = LevelState.lvl1
 }

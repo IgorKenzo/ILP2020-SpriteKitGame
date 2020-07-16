@@ -21,10 +21,19 @@ class Teste : SKScene {
                }
                
            }
+        
+            if (node.name == "Ground") {
+                if let mapNode = node as? SKTileMapNode {
+                    giveTileMapPhysicsBodyGround(map: mapNode)
+                    mapNode.removeFromParent()
+                }
+                
+            }
+
        }
         player = SKShapeNode(circleOfRadius: 50)
         player.fillColor = .blue
-        player.position = CGPoint(x: 0, y: 0)
+        player.position = CGPoint(x: 0, y: 200)
         player.physicsBody = SKPhysicsBody(circleOfRadius: 50)
         player.physicsBody!.isDynamic = true
         player.physicsBody!.affectedByGravity = true
@@ -61,15 +70,61 @@ class Teste : SKScene {
                         let y = CGFloat(row) * tileSize.height - halfHeight + (tileSize.height / 2)
 
 
+                        let tileNode = NoisySpike(texture: tileTexture)
+
+                        tileNode.position = CGPoint(x: x, y: y)
+                        tileNode.physicsBody = SKPhysicsBody(texture: tileNode.texture!, size: CGSize(width: (tileTexture.size().width ), height: (tileTexture.size().height )))
+                        //tileNode.physicsBody?.linearDamping = 60.0
+                        tileNode.physicsBody?.affectedByGravity = false
+                        tileNode.physicsBody?.allowsRotation = false
+                        tileNode.physicsBody?.isDynamic = false
+                        //tileNode.physicsBody?.friction = 1
+                        self.addChild(tileNode)
+
+                        tileNode.position = CGPoint(x: tileNode.position.x + startingLocation.x, y: tileNode.position.y + startingLocation.y)
+
+                    }
+                }
+            }
+    
+    }
+    
+    
+    func giveTileMapPhysicsBodyGround(map: SKTileMapNode)
+        {
+
+            let tileMap = map
+            let startingLocation:CGPoint = tileMap.position
+
+            let tileSize = tileMap.tileSize
+
+            let halfWidth = CGFloat(tileMap.numberOfColumns) / 2.0 * tileSize.width
+            let halfHeight = CGFloat(tileMap.numberOfRows) / 2.0 * tileSize.height
+
+            for col in 0..<tileMap.numberOfColumns {
+
+                for row in 0..<tileMap.numberOfRows {
+
+                    if let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
+
+                    {
+
+                        let tileArray = tileDefinition.textures
+                        let tileTexture = tileArray[0]
+                        
+                        let x = CGFloat(col) * tileSize.width - halfWidth + (tileSize.width / 2)
+                        let y = CGFloat(row) * tileSize.height - halfHeight + (tileSize.height / 2)
+
+
                         let tileNode = SKSpriteNode(texture: tileTexture)
 
                         tileNode.position = CGPoint(x: x, y: y)
                         tileNode.physicsBody = SKPhysicsBody(texture: tileNode.texture!, size: CGSize(width: (tileTexture.size().width ), height: (tileTexture.size().height )))
-                        tileNode.physicsBody?.linearDamping = 60.0
+                        //tileNode.physicsBody?.linearDamping = 60.0
                         tileNode.physicsBody?.affectedByGravity = false
                         tileNode.physicsBody?.allowsRotation = false
                         tileNode.physicsBody?.isDynamic = false
-                        tileNode.physicsBody?.friction = 1
+                        //tileNode.physicsBody?.friction = 1
                         self.addChild(tileNode)
 
                         tileNode.position = CGPoint(x: tileNode.position.x + startingLocation.x, y: tileNode.position.y + startingLocation.y)

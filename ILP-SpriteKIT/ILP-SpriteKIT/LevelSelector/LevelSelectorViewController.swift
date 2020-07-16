@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 
 class LevelSelectorViewController: UICollectionViewController {
     
@@ -26,4 +27,8 @@ class LevelSelectorViewController: UICollectionViewController {
         return cell
      }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        
+    }
 }
