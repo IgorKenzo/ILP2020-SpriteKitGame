@@ -9,20 +9,40 @@
 import SpriteKit
 
 class MainMenu : SKScene {
-    var btnProx : Button!
-    var btnLevel : Button!
     
     var actionsDelegate : ActionsDelegate?
     
     override func didMove(to view: SKView) {
         
-        btnProx = self.childNode(withName: "BtnProx") as? Button
+        loadButton()
+        levelButton()
+    }
+    
+    func loadButton(){
         
-        btnProx.onTap = {self.loadLevel()}
+        let label = SKLabelNode(text: "Continue")
+        label.fontName = "Helvetica-Bold"
         
-        btnLevel = self.childNode(withName: "btnLevel") as? Button
+        let background = SKShapeNode(rectOf: CGSize(width: label.fontSize * CGFloat(label.text!.count), height: label.fontSize * 2), cornerRadius: 10)
+        background.lineWidth = 5
         
-        btnLevel.onTap = {self.loadLevels()}
+        
+        let btn = NodeButton(image: background, label: label, action: {self.loadLevel()})
+        btn.position = CGPoint(x: 0, y: 160)
+        self.addChild(btn)
+    }
+    
+    func levelButton(){
+        let label = SKLabelNode(text: "Select Level")
+        label.fontName = "Helvetica-Bold"
+        
+        let background = SKShapeNode(rectOf: CGSize(width: label.fontSize * CGFloat(label.text!.count), height: label.fontSize * 2), cornerRadius: 10)
+        background.lineWidth = 5
+        
+        
+        let btn = NodeButton(image: background, label: label, action: {self.loadLevelSelector()})
+        btn.position = CGPoint(x: 0, y: -160)
+        self.addChild(btn)
     }
     
     func loadLevel() {
@@ -44,7 +64,7 @@ class MainMenu : SKScene {
         view.presentScene(scene, transition: .push(with: .left, duration: 1))
     }
     
-    func loadLevels()
+    func loadLevelSelector()
     {
         self.actionsDelegate?.loadLevelSelector()
     }

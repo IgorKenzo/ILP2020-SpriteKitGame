@@ -31,6 +31,6 @@ enum LevelState : Int {
 }
 
 class Status {
-    public var gameState = GameState.menu
-    public var levelState = LevelState.lvl1
+    static public var gameState = GameState.menu
+    static public var levelState = LevelState.none
 }
