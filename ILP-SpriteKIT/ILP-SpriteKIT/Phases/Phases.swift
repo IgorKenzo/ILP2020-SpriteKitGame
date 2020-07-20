@@ -19,7 +19,7 @@ class Phases: SKScene, SKPhysicsContactDelegate {
     
     private let levelDefinition = LevelDefinitions.shared
     
-    private var levelState = LevelState.lvl1
+    private var levelState = State.levelState
     
     private var gameState = GameState.menu
     
@@ -34,6 +34,10 @@ class Phases: SKScene, SKPhysicsContactDelegate {
         newPlayer()
         setLightEmitter()
         goal = FinishGoal.new()
+        if State.levelState == .none {levelState = LevelState(rawValue: 0)!}
+        else if State.lastLevelPlayed != .none {
+            levelState = State.lastLevelPlayed
+        }
 
         setPositions()
     }
@@ -133,11 +137,12 @@ class Phases: SKScene, SKPhysicsContactDelegate {
         else if (categoryMasks.contains([.player,.finish]) && gameState != GameState.lose){
             if collision == CategoryBitMasks.finish.rawValue | CategoryBitMasks.player.rawValue  {
                 
-                gameState = GameState.lose
+                gameState = GameState.win
                 
                 removeNodes()
                 let sound = SKAction.playSoundFileNamed("nice.m4a", waitForCompletion: false)
                 self.run(sound)
+                State.lastLevelPlayed = LevelState(rawValue: self.levelState.rawValue)!
                 self.levelState = LevelState(rawValue: self.levelState.rawValue + 1)!
                 if levelState.rawValue < MAXLEVEL {
                     self.setPositions()

@@ -46,26 +46,10 @@ class MainMenu : SKScene {
     }
     
     func loadLevel() {
-        
-        guard let view = (self.view ?? nil) else {
-            return
-        }
-
-        guard let scene = GameScene(fileNamed: "PhasesScene") else {
-            return
-        }
-
-        scene.scaleMode = .aspectFill
-
-        view.showsPhysics = true
-        view.showsDrawCount = true
-        view.showsFPS = true
-
-        view.presentScene(scene, transition: .push(with: .left, duration: 1))
+        self.actionsDelegate?.loadContinueLevel()
     }
     
-    func loadLevelSelector()
-    {
+    func loadLevelSelector() {
         self.actionsDelegate?.loadLevelSelector()
     }
 }

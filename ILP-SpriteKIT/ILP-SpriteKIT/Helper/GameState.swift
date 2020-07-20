@@ -30,7 +30,8 @@ enum LevelState : Int {
     case lvl7
 }
 
-class Status {
+class State {
     static public var gameState = GameState.menu
     static public var levelState = LevelState.none
+    static public var lastLevelPlayed = LevelState.none
 }

@@ -53,7 +53,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         c.position = CGPoint(x: -1 * view.scene!.size.width/2 + (c.size.width/2), y: -1 * view.scene!.size.height/2 + (c.size.height/2))
         self.addChild(c)
         c.zPosition = 2
-        //debugPlayableBorder()
         
         let goal = FinishGoal.new()
         self.addChild(goal)

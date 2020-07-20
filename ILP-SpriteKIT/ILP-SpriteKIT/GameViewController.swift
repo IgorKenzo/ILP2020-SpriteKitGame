@@ -11,7 +11,9 @@ import SpriteKit
 import GameplayKit
 
 protocol ActionsDelegate {
-   func loadLevelSelector()
+    func loadContinueLevel()
+    func loadLevelSelector()
+    func selectLevel(levelIndex: Int)
 }
 
 
@@ -51,11 +53,52 @@ class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
     
     func loadLevelSelector()
     {
-//        let level = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "LevelSelectorViewController")
-//
-//        self.present(level, animated: true, completion: nil)
-        
         self.performSegue(withIdentifier: "LevelSelectorSegue", sender: self)
+    }
+    
+    func loadContinueLevel(){
+        guard let view = self.view as? SKView else {
+            return
+        }
+
+        guard let scene = GameScene(fileNamed: "PhasesScene") else {
+            return
+        }
+
+        scene.scaleMode = .aspectFill
+
+        view.showsPhysics = true
+        view.showsDrawCount = true
+        view.showsFPS = true
+
+        view.presentScene(scene, transition: .push(with: .left, duration: 1))
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let l = segue.destination as? LevelSelectorViewController{
+            l.actionsDelegate = self
+        }
+    }
+    
+    func selectLevel(levelIndex : Int){
+        State.levelState = LevelState(rawValue: levelIndex)!
+        
+        
+        guard let view = self.view as? SKView else {
+            return
+        }
+
+        guard let scene = GameScene(fileNamed: "PhasesScene") else {
+            return
+        }
+
+        scene.scaleMode = .aspectFill
+
+        view.showsPhysics = true
+        view.showsDrawCount = true
+        view.showsFPS = true
+
+        view.presentScene(scene, transition: .push(with: .left, duration: 1))
     }
 
     override var shouldAutorotate: Bool {

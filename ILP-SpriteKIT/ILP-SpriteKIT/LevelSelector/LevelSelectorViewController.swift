@@ -11,6 +11,8 @@ import Combine
 
 class LevelSelectorViewController: UICollectionViewController {
     
+    var actionsDelegate : ActionsDelegate?
+    
     override func viewDidLoad() {
         
     }
@@ -28,7 +30,6 @@ class LevelSelectorViewController: UICollectionViewController {
      }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        
+        actionsDelegate?.selectLevel(levelIndex: indexPath.row)
     }
 }
