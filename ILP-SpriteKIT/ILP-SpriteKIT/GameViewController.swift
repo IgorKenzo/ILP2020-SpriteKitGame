@@ -83,6 +83,7 @@ class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
     func selectLevel(levelIndex : Int){
         State.levelState = LevelState(rawValue: levelIndex)!
         
+        navigationController?.popToRootViewController(animated: false)
         
         guard let view = self.view as? SKView else {
             return
