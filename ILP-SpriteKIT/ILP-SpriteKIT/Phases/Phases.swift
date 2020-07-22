@@ -35,14 +35,15 @@ class Phases: SKScene, SKPhysicsContactDelegate {
         setLightEmitter()
         goal = FinishGoal.new()
         
-        let teste = SKShader(fileNamed: "shader.fsh")
-        teste.uniforms = [SKUniform(name: "u_gradient", texture: SKTexture(imageNamed: "circleshader")),
-                          SKUniform(name: "u_health", float: 0.75)]
-        let testenode = SKSpriteNode(imageNamed: "shield")
-        testenode.shader = teste
-        testenode.position = CGPoint(x: 0, y: 0)
-        self.addChild(testenode)
-        
+//        let teste = SKShader(fileNamed: "shader.fsh")
+//        teste.uniforms = [SKUniform(name: "u_gradient", texture: SKTexture(imageNamed: "circleshader")),
+//                          SKUniform(name: "u_health", float: 0.75)]
+//        let testenode = SKSpriteNode(imageNamed: "shield")
+//        testenode.size = CGSize(width: 500, height: 500)
+//        testenode.shader = teste
+//        testenode.position = CGPoint(x: 0, y: 0)
+//        self.addChild(testenode)
+//        
         
         if State.levelState == .none {levelState = LevelState(rawValue: 0)!}
         else if State.lastLevelPlayed != .none {

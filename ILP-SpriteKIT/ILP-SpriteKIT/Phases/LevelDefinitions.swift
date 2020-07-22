@@ -54,7 +54,24 @@ class LevelDefinitions {
                    ],
                  playerSpawn: CGPoint(x: 0, y: 800), safePoint: CGPoint(x: 0, y: -1294)),
             
-            Level(grounds: [], spikes: [], playerSpawn: CGPoint.zero, safePoint: CGPoint(x: 0, y: -400))
+            Level(grounds: [
+                (Ground(color: .white, size: CGSize(width: 300, height: 30)), CGPoint(x: -620, y: 1050)),
+                ],
+                  spikes: [
+                    (StealthSpike(imageNamed: "spike"),CGPoint(x: -600, y: 850)),
+                    (StealthSpike(imageNamed: "spike"),CGPoint(x: -500, y: 850)),
+                    (StealthSpike(imageNamed: "spike"),CGPoint(x: -400, y: 850)),
+                    (StealthSpike(imageNamed: "spike"),CGPoint(x: -300, y: 850)),
+                    (StealthSpike(imageNamed: "spike"),CGPoint(x: -200, y: 850)),
+                    (StealthSpike(imageNamed: "spike"),CGPoint(x: -100, y: 850)),
+                    (StealthSpike(imageNamed: "spike"),CGPoint(x: 0, y: 850)),
+                    (StealthSpike(imageNamed: "spike"),CGPoint(x: 100, y: 850)),
+                    (StealthSpike(imageNamed: "spike"),CGPoint(x: 200, y: 850)),
+                    (StealthSpike(imageNamed: "spike"),CGPoint(x: 300, y: 850)),
+                    (StealthSpike(imageNamed: "spike"),CGPoint(x: 400, y: 850)),
+                    
+                ],
+                  playerSpawn: CGPoint(x: -600, y: 1100), safePoint: CGPoint(x: 0, y: -400)),
         ]
     )
     
