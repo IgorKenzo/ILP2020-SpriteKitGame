@@ -15,6 +15,7 @@
 		0547897724B8E9A700D64528 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0547897624B8E9A700D64528 /* MainMenu.swift */; };
 		0547899924B8F1DE00D64528 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0547899824B8F1DE00D64528 /* Button.swift */; };
 		054EF82724B6538600241598 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054EF82624B6538600241598 /* GameState.swift */; };
+		0551674924CA0ECC000CDC26 /* SpriteLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0551674824CA0ECC000CDC26 /* SpriteLoader.swift */; };
 		05B6C76024B7B94C00CF503B /* nice.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 05B6C75F24B7B2E000CF503B /* nice.m4a */; };
 		05BE4778249D5A0900DB23EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BE4777249D5A0900DB23EA /* AppDelegate.swift */; };
 		05BE477A249D5A0900DB23EA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 05BE4779249D5A0900DB23EA /* GameScene.sks */; };
@@ -50,6 +51,7 @@
 		0547897624B8E9A700D64528 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		0547899824B8F1DE00D64528 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		054EF82624B6538600241598 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
+		0551674824CA0ECC000CDC26 /* SpriteLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteLoader.swift; sourceTree = "<group>"; };
 		05B6C75F24B7B2E000CF503B /* nice.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = nice.m4a; sourceTree = "<group>"; };
 		05BE4774249D5A0900DB23EA /* ILP-SpriteKIT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ILP-SpriteKIT.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		05BE4777249D5A0900DB23EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -131,6 +133,14 @@
 			path = Menu;
 			sourceTree = "<group>";
 		};
+		0551674724CA0EAA000CDC26 /* SpriteLoader */ = {
+			isa = PBXGroup;
+			children = (
+				0551674824CA0ECC000CDC26 /* SpriteLoader.swift */,
+			);
+			path = SpriteLoader;
+			sourceTree = "<group>";
+		};
 		05B6C75E24B7B25400CF503B /* Sound */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,6 +168,7 @@
 		05BE4776249D5A0900DB23EA /* ILP-SpriteKIT */ = {
 			isa = PBXGroup;
 			children = (
+				0551674724CA0EAA000CDC26 /* SpriteLoader */,
 				0531D69D24C780C300E11256 /* testesp */,
 				05FBC88324BCD807002F02CD /* LevelSelector */,
 				0547897324B8E94C00D64528 /* Menu */,
@@ -291,6 +302,7 @@
 				05BE4780249D5A0900DB23EA /* GameViewController.swift in Sources */,
 				0547899924B8F1DE00D64528 /* Button.swift in Sources */,
 				05BE4778249D5A0900DB23EA /* AppDelegate.swift in Sources */,
+				0551674924CA0ECC000CDC26 /* SpriteLoader.swift in Sources */,
 				05FAC3B824AE71050056E186 /* Teste.swift in Sources */,
 				0547897724B8E9A700D64528 /* MainMenu.swift in Sources */,
 				05F3D90624AD106600C07E06 /* Spike.swift in Sources */,

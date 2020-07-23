@@ -46,8 +46,6 @@ class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
             view.showsPhysics = true
             view.showsFPS = true
             view.showsNodeCount = true
-            
-           
         }
     }
     

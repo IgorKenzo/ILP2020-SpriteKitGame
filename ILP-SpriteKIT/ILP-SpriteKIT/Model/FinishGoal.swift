@@ -18,13 +18,13 @@ class FinishGoal{
         goal.position = CGPoint(x: -590, y: -1230)
         goal.fillColor = .yellow
 
-        let light = SKLightNode()
-        light.position = CGPoint(x: 0, y: 0)
-        light.falloff = 3
-        light.ambientColor  = .black
-        light.lightColor = .yellow
-              
-        goal.addChild(light)
+//        let light = SKLightNode()
+//        light.position = CGPoint(x: 0, y: 0)
+//        light.falloff = 3
+//        light.ambientColor  = .black
+//        light.lightColor = .yellow
+//              
+//        goal.addChild(light)
 
         goal.physicsBody = SKPhysicsBody(edgeLoopFrom: path)
         goal.physicsBody?.affectedByGravity = false

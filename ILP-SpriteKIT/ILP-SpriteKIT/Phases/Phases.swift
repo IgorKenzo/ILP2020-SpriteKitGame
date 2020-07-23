@@ -13,7 +13,7 @@ import CoreGraphics
 
 class Phases: SKScene, SKPhysicsContactDelegate {
     
-    private var player : SKShapeNode!//SKSpriteNode!
+    private var player : SKSpriteNode!//SKShapeNode!//
 
     private var goal : SKShapeNode!
     
@@ -76,9 +76,9 @@ class Phases: SKScene, SKPhysicsContactDelegate {
     
     
     func newPlayer(){
-        player = SKShapeNode(circleOfRadius: 50)
-        player.fillColor = .blue
+        player = SKSpriteNode(imageNamed: "player")
         player.position = CGPoint(x: 0, y: 300)
+        //player.physicsBody = SKPhysicsBody(circleOfRadius: 50)
         player.physicsBody = SKPhysicsBody(circleOfRadius: 50)
         player.physicsBody!.isDynamic = true
         player.physicsBody!.affectedByGravity = true
@@ -104,7 +104,7 @@ class Phases: SKScene, SKPhysicsContactDelegate {
         case .no:
             break
         case .left:
-            player.physicsBody?.velocity = CGVector(dx: -1 * playerSpeedPerSec,dy: physicsWorld.gravity.dy)
+            player.physicsBody?.velocity = CGVector(dx: -(playerSpeedPerSec),dy: physicsWorld.gravity.dy)
         case .right:
             player.physicsBody?.velocity = CGVector(dx: playerSpeedPerSec,dy: physicsWorld.gravity.dy)
         }
