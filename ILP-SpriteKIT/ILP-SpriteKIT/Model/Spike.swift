@@ -20,9 +20,6 @@ class Spike: SKSpriteNode {
         self.physicsBody?.collisionBitMask = CategoryBitMasks.player.rawValue
         self.lightingBitMask = 1
         self.zPosition = 2
-        
-        let spin = SKAction.rotate(byAngle: .pi/4, duration: 1)
-        self.run(SKAction.repeatForever(spin))
     }
     
     required init?(coder aDecoder: NSCoder) {

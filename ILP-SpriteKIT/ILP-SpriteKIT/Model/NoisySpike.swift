@@ -19,6 +19,9 @@ class NoisySpike : Spike {
         light.lightColor = .red
         
         self.addChild(light)
+        
+        let spin = SKAction.rotate(byAngle: .pi/4, duration: 1)
+        self.run(SKAction.repeatForever(spin))
     }
     
     required init?(coder aDecoder: NSCoder) {

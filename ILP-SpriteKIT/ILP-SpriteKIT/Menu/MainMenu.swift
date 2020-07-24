@@ -16,6 +16,16 @@ class MainMenu : SKScene {
         
         loadButton()
         levelButton()
+        
+        let teste = SKShader(fileNamed: "shader.fsh")
+        teste.uniforms = [SKUniform(name: "u_resolution", vectorFloat2: (SIMD2<Float>(repeating: 500)))]
+        
+        let testenode = SKSpriteNode()
+        testenode.size = CGSize(width: 500, height: 500)
+        testenode.shader = teste
+        testenode.position = CGPoint(x: 0, y: 0)
+        self.addChild(testenode)
+        
     }
     
     func loadButton(){

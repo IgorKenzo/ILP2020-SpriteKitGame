@@ -78,7 +78,6 @@ class Phases: SKScene, SKPhysicsContactDelegate {
     func newPlayer(){
         player = SKSpriteNode(imageNamed: "player")
         player.position = CGPoint(x: 0, y: 300)
-        //player.physicsBody = SKPhysicsBody(circleOfRadius: 50)
         player.physicsBody = SKPhysicsBody(circleOfRadius: 50)
         player.physicsBody!.isDynamic = true
         player.physicsBody!.affectedByGravity = true
@@ -130,6 +129,7 @@ class Phases: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
+        
         let collision : UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
         let categoryMasks : CategoryBitMasks = [contact.bodyA.category, contact.bodyB.category]
