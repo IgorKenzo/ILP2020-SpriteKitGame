@@ -12,20 +12,11 @@ class MainMenu : SKScene {
     
     var actionsDelegate : ActionsDelegate?
     
+    
     override func didMove(to view: SKView) {
         
         loadButton()
         levelButton()
-        
-        let teste = SKShader(fileNamed: "shader.fsh")
-        teste.uniforms = [SKUniform(name: "u_resolution", vectorFloat2: (SIMD2<Float>(repeating: 500)))]
-        
-        let testenode = SKSpriteNode()
-        testenode.size = CGSize(width: 500, height: 500)
-        testenode.shader = teste
-        testenode.position = CGPoint(x: 0, y: 0)
-        self.addChild(testenode)
-        
     }
     
     func loadButton(){
@@ -37,7 +28,7 @@ class MainMenu : SKScene {
         background.lineWidth = 5
         
         
-        let btn = NodeButton(image: background, label: label, action: {self.loadLevel()})
+        let btn = ButtonNode(image: background, label: label, action: {self.loadLevel()})
         btn.position = CGPoint(x: 0, y: 160)
         self.addChild(btn)
     }
@@ -50,16 +41,18 @@ class MainMenu : SKScene {
         background.lineWidth = 5
         
         
-        let btn = NodeButton(image: background, label: label, action: {self.loadLevelSelector()})
+        let btn = ButtonNode(image: background, label: label, action: {self.loadLevelSelector()})
         btn.position = CGPoint(x: 0, y: -160)
         self.addChild(btn)
     }
     
     func loadLevel() {
-        self.actionsDelegate?.loadContinueLevel()
+        //self.actionsDelegate?.loadContinueLevel()
+        TransitionManager.shared.transition(from: self, to: .GamePlay)
     }
     
     func loadLevelSelector() {
         self.actionsDelegate?.loadLevelSelector()
     }
+
 }

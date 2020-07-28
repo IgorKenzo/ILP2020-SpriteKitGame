@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class NodeButton: SKNode {
+class ButtonNode: SKNode {
     var image : SKShapeNode?
     var label: SKLabelNode?
     var action : (() -> Void)?

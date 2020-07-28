@@ -17,7 +17,7 @@ class LevelDefinitions {
                 (Ground(color: .white, size: CGSize(width: 1242, height: 100)), CGPoint(x: 0, y: -1344)),
                   ],
                   spikes: [],
-            playerSpawn: CGPoint(x: -600, y: -1294), safePoint: CGPoint(x: 0, y: -1294)),
+                  playerSpawn: CGPoint(x: -600, y: -1294), safePoint: CGPoint(x: 0, y: -1294), pickupPoint: nil),
             
             Level(grounds: [
                 (Ground(color: .white, size: CGSize(width: 100, height: 2688)), CGPoint(x: -620, y: 0)),
@@ -26,7 +26,7 @@ class LevelDefinitions {
                 (Ground(color: .white, size: CGSize(width: 1242, height: 100)), CGPoint(x: 0, y: -1344)),
                   ],
                   spikes: [],
-            playerSpawn: CGPoint(x: 0, y: 800), safePoint: CGPoint(x: 0, y: -1294)),
+            playerSpawn: CGPoint(x: 0, y: 800), safePoint: CGPoint(x: 0, y: -1294), pickupPoint: nil),
             
             Level(grounds: [
                 (Ground(color: .white, size: CGSize(width: 100, height: 2688)), CGPoint(x: -620, y: 0)),
@@ -35,7 +35,7 @@ class LevelDefinitions {
                 (Ground(color: .white, size: CGSize(width: 1242, height: 100)), CGPoint(x: 0, y: -1344)),
                   ],
                   spikes: [(NoisySpike(texture: SpriteLoader.shared.spike),CGPoint(x: 0, y: 0))],
-            playerSpawn: CGPoint(x: 0, y: 800), safePoint: CGPoint(x: 0, y: -1294)),
+            playerSpawn: CGPoint(x: 0, y: 800), safePoint: CGPoint(x: 0, y: -1294), pickupPoint: nil),
             
             Level(grounds: [
                 (Ground(color: .white, size: CGSize(width: 100, height: 2688)), CGPoint(x: -690, y: 0)),
@@ -51,7 +51,7 @@ class LevelDefinitions {
                     (StealthSpike(texture: SpriteLoader.shared.spike),CGPoint(x: -450, y: 0)),
                     (StealthSpike(texture: SpriteLoader.shared.spike),CGPoint(x: -600, y: 0)),
                    ],
-                 playerSpawn: CGPoint(x: 0, y: 800), safePoint: CGPoint(x: 0, y: -1294)),
+                 playerSpawn: CGPoint(x: 0, y: 800), safePoint: CGPoint(x: 0, y: -1294), pickupPoint: nil),
             
             Level(grounds: [
                 (Ground(color: .white, size: CGSize(width: 300, height: 30)), CGPoint(x: -620, y: 1050)),
@@ -114,7 +114,7 @@ class LevelDefinitions {
                     (StealthSpike(texture: SpriteLoader.shared.spike),CGPoint(x: 500, y: -350)),
                     (StealthSpike(texture: SpriteLoader.shared.spike),CGPoint(x: 600, y: -350)),
                 ],
-                  playerSpawn: CGPoint(x: -600, y: 1100), safePoint: CGPoint(x: 0, y: -600)),
+                  playerSpawn: CGPoint(x: -600, y: 1100), safePoint: CGPoint(x: 0, y: -600), pickupPoint: CGPoint(x: 400, y: 850)),
         ]
     )
     

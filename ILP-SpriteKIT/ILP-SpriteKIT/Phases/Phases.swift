@@ -23,6 +23,10 @@ class Phases: SKScene, SKPhysicsContactDelegate {
     
     private var gameState = GameState.menu
     
+    private var revealShader : SKSpriteNode?
+    
+    private var pickupNode : SKSpriteNode!
+    
     //MARK: Movement
     let playerSpeedPerSec : CGFloat = 300.0
     
@@ -31,18 +35,37 @@ class Phases: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         self.physicsWorld.contactDelegate = self
         
+        
+        let pause = ButtonNode(image: SKShapeNode(circleOfRadius: 20), label: SKLabelNode(text: "ä")) {
+            //self.view?.isPaused = !self.view!.isPaused
+            
+//            let sc = SKScene(size: CGSize(width: 1000, height: 1000))
+//            sc.backgroundColor = .clear
+//            sc.addChild(SKSpriteNode(color: .white, size: CGSize(width: 200, height: 200)))
+//
+            let sc = SKScene(fileNamed: "PauseScene")!
+            sc.physicsBody = nil
+            sc.zPosition = 10
+            self.addChild(sc)
+            
+        }
+        pause.position = CGPoint(x: 0, y: 0)
+        self.addChild(pause)
+        
         newPlayer()
         setLightEmitter()
         goal = FinishGoal.new()
+        newPickup()
         
-//        let teste = SKShader(fileNamed: "shader.fsh")
-//        teste.uniforms = [SKUniform(name: "u_gradient", texture: SKTexture(imageNamed: "circleshader")),
-//                          SKUniform(name: "u_health", float: 0.75)]
-//        let testenode = SKSpriteNode(imageNamed: "shield")
-//        testenode.size = CGSize(width: 500, height: 500)
-//        testenode.shader = teste
-//        testenode.position = CGPoint(x: 0, y: 0)
-//        self.addChild(testenode)
+        let teste = SKShader(fileNamed: "shader.fsh")
+        teste.uniforms = [SKUniform(name: "u_resolution", vectorFloat2: (SIMD2<Float>(repeating: 500)))]
+
+        revealShader = SKSpriteNode()
+        revealShader!.size = CGSize(width: 500, height: 500)
+        revealShader!.shader = teste
+        revealShader!.position = CGPoint(x: 0, y: 0)
+        revealShader!.zPosition = -3
+        
 //        
         
         if State.levelState == .none {levelState = LevelState(rawValue: 0)!}
@@ -71,9 +94,23 @@ class Phases: SKScene, SKPhysicsContactDelegate {
         goal.position = levelDefinition.levels[levelState.rawValue].safePoint
         self.addChild(goal)
         
+        if let pos = levelDefinition.levels[levelState.rawValue].pickupPoint {
+            pickupNode.position = pos
+            self.addChild(pickupNode)
+        }
+        
         gameState = GameState.playing
     }
-    
+    func newPickup()
+    {
+        pickupNode = SKSpriteNode(imageNamed: "circleshader")
+        pickupNode.physicsBody = SKPhysicsBody(circleOfRadius: 50)
+        pickupNode.physicsBody?.affectedByGravity = false
+        pickupNode.physicsBody?.isDynamic = false
+        pickupNode.physicsBody?.categoryBitMask = CategoryBitMasks.pickup.rawValue
+        pickupNode.physicsBody?.category = CategoryBitMasks.pickup
+        pickupNode.physicsBody?.contactTestBitMask = CategoryBitMasks.player.rawValue
+    }
     
     func newPlayer(){
         player = SKSpriteNode(imageNamed: "player")
@@ -83,7 +120,7 @@ class Phases: SKScene, SKPhysicsContactDelegate {
         player.physicsBody!.affectedByGravity = true
         player.zPosition = 1
         player.physicsBody?.categoryBitMask = CategoryBitMasks.player.rawValue
-        player.physicsBody?.contactTestBitMask =  CategoryBitMasks.spike.rawValue
+        player.physicsBody?.contactTestBitMask = CategoryBitMasks.spike.rawValue
     }
     
     func setLightEmitter()
@@ -117,7 +154,7 @@ class Phases: SKScene, SKPhysicsContactDelegate {
             eMovement = .left
         }
         else if positionInScene!.x > 0 {
-             eMovement = .right
+            eMovement = .right
         }
         else {
             eMovement = .no
@@ -163,11 +200,20 @@ class Phases: SKScene, SKPhysicsContactDelegate {
                 }
             }
         }
+        else if (categoryMasks.contains([.player,.pickup]) && gameState != GameState.lose){
+            pickupNode.removeFromParent()
+            self.addChild(revealShader!)
+            
+           revealShader?.run(SKAction.scale(by: 3, duration: 1))
+        }
     }
     
     func removeNodes() {
         player.removeFromParent()
         goal.removeFromParent()
+        
+        pickupNode.removeFromParent()
+        revealShader?.removeFromParent()
         
         for g in levelDefinition.levels[levelState.rawValue].grounds {
             g.0.removeFromParent()

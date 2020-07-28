@@ -36,6 +36,8 @@ class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             scene.actionsDelegate = self
+            
+            TransitionManager.shared.mainmenu = scene
             // Present the scene
             view.presentScene(scene)
             
@@ -59,7 +61,7 @@ class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
             return
         }
 
-        guard let scene = GameScene(fileNamed: "PhasesScene") else {
+        guard let scene = SKScene(fileNamed: "PhasesScene") else {
             return
         }
 
@@ -87,7 +89,7 @@ class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
             return
         }
 
-        guard let scene = GameScene(fileNamed: "PhasesScene") else {
+        guard let scene = SKScene(fileNamed: "PhasesScene") else {
             return
         }
 
@@ -97,7 +99,7 @@ class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
         view.showsDrawCount = true
         view.showsFPS = true
 
-        view.presentScene(scene, transition: .push(with: .left, duration: 1))
+        view.presentScene(scene, transition: .push(with: .left, duration: 0.5))
     }
 
     override var shouldAutorotate: Bool {

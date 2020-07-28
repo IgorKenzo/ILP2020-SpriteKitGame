@@ -15,4 +15,5 @@ struct CategoryBitMasks : OptionSet {
     static let player = CategoryBitMasks(rawValue: 0x1 << 0)
     static let spike  = CategoryBitMasks(rawValue: 0x1 << 1)
     static let finish = CategoryBitMasks(rawValue: 0x1 << 2)
+    static let pickup = CategoryBitMasks(rawValue: 0x1 << 3)
 }

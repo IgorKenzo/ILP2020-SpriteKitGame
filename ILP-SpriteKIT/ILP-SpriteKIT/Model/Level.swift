@@ -14,11 +14,13 @@ class Level {
     var spikes :  [(Spike, CGPoint)]
     var playerSpawn : CGPoint
     var safePoint : CGPoint
+    var pickupPoint : CGPoint?
     
-    init(grounds : [(Ground, CGPoint)],spikes: [(Spike, CGPoint)], playerSpawn : CGPoint, safePoint : CGPoint) {
+    init(grounds : [(Ground, CGPoint)],spikes: [(Spike, CGPoint)], playerSpawn : CGPoint, safePoint : CGPoint, pickupPoint: CGPoint?) {
         self.grounds = grounds
         self.spikes = spikes
         self.playerSpawn = playerSpawn
         self.safePoint = safePoint
+        self.pickupPoint = pickupPoint
     }
 }
