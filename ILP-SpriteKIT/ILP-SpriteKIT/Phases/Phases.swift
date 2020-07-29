@@ -39,16 +39,13 @@ class Phases: SKScene, SKPhysicsContactDelegate {
         let pause = ButtonNode(image: SKShapeNode(circleOfRadius: 20), label: SKLabelNode(text: "ä")) {
             //self.view?.isPaused = !self.view!.isPaused
             
-//            let sc = SKScene(size: CGSize(width: 1000, height: 1000))
-//            sc.backgroundColor = .clear
-//            sc.addChild(SKSpriteNode(color: .white, size: CGSize(width: 200, height: 200)))
-//
-            let sc = SKScene(fileNamed: "PauseScene")!
-            sc.physicsBody = nil
-            sc.zPosition = 10
+            let width : CGFloat = 1000, height : CGFloat = 1000
+            let sc = PauseDialog(rect: CGRect(x: -(width/2), y: -(height/2), width: width, height: height), cornerRadius: 10)
+            sc.dismiss = { sc.removeFromParent() }
             self.addChild(sc)
             
         }
+        
         pause.position = CGPoint(x: 0, y: 0)
         self.addChild(pause)
         

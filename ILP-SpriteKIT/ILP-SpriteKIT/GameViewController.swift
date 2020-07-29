@@ -45,7 +45,7 @@ class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
             //let scene = SKScene(size: CGSize(width: 2688, height: 1242))
             //view.presentScene(scene)
             view.ignoresSiblingOrder = true
-            view.showsPhysics = true
+            //view.showsPhysics = true
             view.showsFPS = true
             view.showsNodeCount = true
         }

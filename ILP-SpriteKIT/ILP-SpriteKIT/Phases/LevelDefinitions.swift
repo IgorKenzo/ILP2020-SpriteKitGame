@@ -114,7 +114,7 @@ class LevelDefinitions {
                     (StealthSpike(texture: SpriteLoader.shared.spike),CGPoint(x: 500, y: -350)),
                     (StealthSpike(texture: SpriteLoader.shared.spike),CGPoint(x: 600, y: -350)),
                 ],
-                  playerSpawn: CGPoint(x: -600, y: 1100), safePoint: CGPoint(x: 0, y: -600), pickupPoint: CGPoint(x: 400, y: 850)),
+                  playerSpawn: CGPoint(x: -600, y: 1100), safePoint: CGPoint(x: 0, y: -600), pickupPoint: CGPoint(x: -500, y: 1100)),
         ]
     )
     
