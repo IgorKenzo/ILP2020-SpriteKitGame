@@ -24,6 +24,8 @@
 		05BE4783249D5A0900DB23EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05BE4781249D5A0900DB23EA /* Main.storyboard */; };
 		05BE4785249D5A0B00DB23EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05BE4784249D5A0B00DB23EA /* Assets.xcassets */; };
 		05BE4788249D5A0B00DB23EA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05BE4786249D5A0B00DB23EA /* LaunchScreen.storyboard */; };
+		05CBC45524D48F690094154F /* PauseScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 05CBC45424D48F690094154F /* PauseScene.sks */; };
+		05CBC45724D4902D0094154F /* Pause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CBC45624D4902D0094154F /* Pause.swift */; };
 		05D3A19F24C24C6700BFDFBE /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D3A19E24C24C6700BFDFBE /* ButtonNode.swift */; };
 		05EA5B6D24D0BCD2008543B1 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EA5B6C24D0BCD2008543B1 /* TransitionManager.swift */; };
 		05EA5B6F24D0D5D7008543B1 /* pauseStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05EA5B6E24D0D5D7008543B1 /* pauseStoryboard.storyboard */; };
@@ -64,6 +66,8 @@
 		05BE4784249D5A0B00DB23EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		05BE4787249D5A0B00DB23EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		05BE4789249D5A0B00DB23EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		05CBC45424D48F690094154F /* PauseScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PauseScene.sks; sourceTree = "<group>"; };
+		05CBC45624D4902D0094154F /* Pause.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pause.swift; sourceTree = "<group>"; };
 		05D3A19E24C24C6700BFDFBE /* ButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 		05EA5B6C24D0BCD2008543B1 /* TransitionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionManager.swift; sourceTree = "<group>"; };
 		05EA5B6E24D0D5D7008543B1 /* pauseStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = pauseStoryboard.storyboard; sourceTree = "<group>"; };
@@ -173,6 +177,7 @@
 		05BE4776249D5A0900DB23EA /* ILP-SpriteKIT */ = {
 			isa = PBXGroup;
 			children = (
+				05CBC45324D48F3D0094154F /* PauseScreen */,
 				05EA5B6B24D0BCB3008543B1 /* TransitionManager */,
 				0551674724CA0EAA000CDC26 /* SpriteLoader */,
 				0531D69D24C780C300E11256 /* Shaders */,
@@ -196,6 +201,15 @@
 				05EA5B6E24D0D5D7008543B1 /* pauseStoryboard.storyboard */,
 			);
 			path = "ILP-SpriteKIT";
+			sourceTree = "<group>";
+		};
+		05CBC45324D48F3D0094154F /* PauseScreen */ = {
+			isa = PBXGroup;
+			children = (
+				05CBC45424D48F690094154F /* PauseScene.sks */,
+				05CBC45624D4902D0094154F /* Pause.swift */,
+			);
+			path = PauseScreen;
 			sourceTree = "<group>";
 		};
 		05EA5B6B24D0BCB3008543B1 /* TransitionManager */ = {
@@ -293,6 +307,7 @@
 				05BE4788249D5A0B00DB23EA /* LaunchScreen.storyboard in Resources */,
 				0531D69F24C7813200E11256 /* shader.fsh in Resources */,
 				05BE477C249D5A0900DB23EA /* Actions.sks in Resources */,
+				05CBC45524D48F690094154F /* PauseScene.sks in Resources */,
 				05ECA91324B508950070AD02 /* PhasesScene.sks in Resources */,
 				05FAC3B424AE6BE40056E186 /* teste.sks in Resources */,
 				05FAC3B624AE6C260056E186 /* SceneTeste.sks in Resources */,
@@ -326,6 +341,7 @@
 				05ECA91624B50B9C0070AD02 /* MovementEnum.swift in Sources */,
 				05FBC88524BCD83D002F02CD /* LevelSelectorViewController.swift in Sources */,
 				0529267C24B3A8F9000A9098 /* LevelDefinitions.swift in Sources */,
+				05CBC45724D4902D0094154F /* Pause.swift in Sources */,
 				05ECA91824B50BE10070AD02 /* CategoryBitMask.swift in Sources */,
 				051143EF24AA7B750017773E /* Ground.swift in Sources */,
 				05ECA91E24B51EAF0070AD02 /* FinishGoal.swift in Sources */,

@@ -22,7 +22,7 @@ class LevelSelectorViewController: UICollectionViewController {
      }
      
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for:    indexPath) as! CustomCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
         //print(indexPath.row)
         cell.defineCell(value: "\(indexPath.row + 1)")
         

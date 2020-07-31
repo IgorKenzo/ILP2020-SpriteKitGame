@@ -31,7 +31,11 @@ enum LevelState : Int {
 }
 
 class State {
-    static public var gameState = GameState.menu
-    static public var levelState = LevelState.none
-    static public var lastLevelPlayed = LevelState.none
+    
+    private init() {}
+    static var shared : State = State()
+    
+    var gameState = GameState.menu
+    var levelState = LevelState.none
+    var lastLevelPlayed = LevelState.none
 }

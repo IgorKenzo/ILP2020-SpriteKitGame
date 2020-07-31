@@ -74,14 +74,8 @@ class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
         view.presentScene(scene, transition: .push(with: .left, duration: 1))
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let l = segue.destination as? LevelSelectorViewController{
-            l.actionsDelegate = self
-        }
-    }
-    
     func selectLevel(levelIndex : Int){
-        State.levelState = LevelState(rawValue: levelIndex)!
+        State.shared.levelState = LevelState(rawValue: levelIndex)!
         
         navigationController?.popToRootViewController(animated: false)
         
@@ -100,6 +94,12 @@ class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
         view.showsFPS = true
 
         view.presentScene(scene, transition: .push(with: .left, duration: 0.5))
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let l = segue.destination as? LevelSelectorViewController{
+            l.actionsDelegate = self
+        }
     }
 
     override var shouldAutorotate: Bool {

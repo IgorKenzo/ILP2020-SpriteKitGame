@@ -2,29 +2,21 @@
 //  Pause.swift
 //  ILP-SpriteKIT
 //
-//  Created by Igor Kenzo Miyamoto Dias on 28/07/20.
+//  Created by Igor Kenzo Miyamoto Dias on 31/07/20.
 //  Copyright © 2020 Igor Miyamoto. All rights reserved.
 //
 
 import SpriteKit
 
-class PauseDialog: SKShapeNode {
-    var status : Int = 0
-//    var btnResume : ButtonNode?
-//    var btnRestart : ButtonNode?
-//    var btnMenu : ButtonNode?
-    var dismiss : (() -> Void)?
-    
-    override init() {
-        super.init()
+class Pause: SKScene {
+
+
+    override func didMove(to view: SKView) {
         setBtnResume()
-        setBtnRestart()
         setBtnMenu()
+        setBtnRestart()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+
     
     func setBtnResume() {
         let label = SKLabelNode(text: "Resume")
@@ -35,9 +27,7 @@ class PauseDialog: SKShapeNode {
                
                
         let btn = ButtonNode(image: background, label: label, action: {
-            self.status = 1
-            
-            self.dismiss!()
+            TransitionManager.shared.transition(from: self, to: .GamePlay, transition: .crossFade(withDuration: 0.5))
         })
         btn.position = CGPoint(x: 0, y: 200)
        self.addChild(btn)
@@ -51,7 +41,7 @@ class PauseDialog: SKShapeNode {
        background.lineWidth = 5
                
                
-       let btn = ButtonNode(image: background, label: label, action: { self.status = 2 })
+       let btn = ButtonNode(image: background, label: label, action: { print("bbbbb") })
         btn.position = CGPoint(x: 0, y: 100)
        self.addChild(btn)
     }
@@ -64,8 +54,11 @@ class PauseDialog: SKShapeNode {
        background.lineWidth = 5
                
                
-       let btn = ButtonNode(image: background, label: label, action: { self.status = 3 })
+       let btn = ButtonNode(image: background, label: label, action: {
+        TransitionManager.shared.transition(from: self, to: .MainMenu, transition: .fade(withDuration: 0.5))
+       })
         btn.position = CGPoint(x: 0, y: 0)
        self.addChild(btn)
     }
+
 }

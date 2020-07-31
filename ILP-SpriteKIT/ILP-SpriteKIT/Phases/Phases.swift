@@ -9,17 +9,17 @@
 import SpriteKit
 import GameplayKit
 import CoreGraphics
-
+import Combine
 
 class Phases: SKScene, SKPhysicsContactDelegate {
     
-    private var player : SKSpriteNode!//SKShapeNode!//
+    private var player : SKSpriteNode!
 
     private var goal : SKShapeNode!
     
     private let levelDefinition = LevelDefinitions.shared
     
-    private var levelState = State.levelState
+    private var levelState = State.shared.levelState
     
     private var gameState = GameState.menu
     
@@ -39,11 +39,17 @@ class Phases: SKScene, SKPhysicsContactDelegate {
         let pause = ButtonNode(image: SKShapeNode(circleOfRadius: 20), label: SKLabelNode(text: "ä")) {
             //self.view?.isPaused = !self.view!.isPaused
             
-            let width : CGFloat = 1000, height : CGFloat = 1000
-            let sc = PauseDialog(rect: CGRect(x: -(width/2), y: -(height/2), width: width, height: height), cornerRadius: 10)
-            sc.dismiss = { sc.removeFromParent() }
-            self.addChild(sc)
+//            let width : CGFloat = 1000, height : CGFloat = 1000
+//            let sc = PauseDialog(rect: CGRect(x: -(width/2), y: -(height/2), width: width, height: height), cornerRadius: 10)
+//            //let whatToDo : Published<Int>
+//            sc.dismiss = { sc.removeFromParent() }
+//            self.addChild(sc)
             
+            //TransitionManager.shared.lastScene = self
+//            self.removeFromParent()
+//            self.removeAllChildren()
+            State.shared.levelState = self.levelState
+            TransitionManager.shared.transition(from: self, to: .Pause, transition: .crossFade(withDuration: 0.5))
         }
         
         pause.position = CGPoint(x: 0, y: 0)
@@ -65,10 +71,10 @@ class Phases: SKScene, SKPhysicsContactDelegate {
         
 //        
         
-        if State.levelState == .none {levelState = LevelState(rawValue: 0)!}
-        else if State.lastLevelPlayed != .none {
-            levelState = State.lastLevelPlayed
+        if State.shared.lastLevelPlayed != .none {
+            levelState = State.shared.lastLevelPlayed
         }
+        else if levelState == .none { levelState = LevelState(rawValue: 0)! }
 
         setPositions()
     }
@@ -113,6 +119,7 @@ class Phases: SKScene, SKPhysicsContactDelegate {
         player = SKSpriteNode(imageNamed: "player")
         player.position = CGPoint(x: 0, y: 300)
         player.physicsBody = SKPhysicsBody(circleOfRadius: 50)
+        player.physicsBody?.usesPreciseCollisionDetection = true
         player.physicsBody!.isDynamic = true
         player.physicsBody!.affectedByGravity = true
         player.zPosition = 1
@@ -187,7 +194,7 @@ class Phases: SKScene, SKPhysicsContactDelegate {
                 removeNodes()
                 let sound = SKAction.playSoundFileNamed("nice.m4a", waitForCompletion: false)
                 self.run(sound)
-                State.lastLevelPlayed = LevelState(rawValue: self.levelState.rawValue)!
+                State.shared.lastLevelPlayed = LevelState(rawValue: self.levelState.rawValue)!
                 self.levelState = LevelState(rawValue: self.levelState.rawValue + 1)!
                 if levelState.rawValue < MAXLEVEL {
                     self.setPositions()
