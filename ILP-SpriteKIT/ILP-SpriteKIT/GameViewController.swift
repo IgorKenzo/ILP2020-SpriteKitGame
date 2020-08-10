@@ -21,7 +21,10 @@ class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.barTintColor = .black
+        
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
 //            if let scene = GameScene(fileNamed: "SceneTeste") {
@@ -86,13 +89,13 @@ class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
         guard let scene = SKScene(fileNamed: "PhasesScene") else {
             return
         }
-
+        
         scene.scaleMode = .aspectFill
-
+    
         //view.showsPhysics = true
         view.showsDrawCount = true
         view.showsFPS = true
-
+        
         view.presentScene(scene, transition: .push(with: .left, duration: 0.5))
     }
     
@@ -117,5 +120,4 @@ class GameViewController: UIViewController, SKSceneDelegate, ActionsDelegate {
     override var prefersStatusBarHidden: Bool {
         return true
     }
- 
 }

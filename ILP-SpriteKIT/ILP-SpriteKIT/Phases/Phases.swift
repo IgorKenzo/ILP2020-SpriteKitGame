@@ -35,30 +35,15 @@ class Phases: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         self.physicsWorld.contactDelegate = self
         
-        
-        let pause = ButtonNode(image: SKShapeNode(circleOfRadius: 20), label: SKLabelNode(text: "ä")) {
-            //self.view?.isPaused = !self.view!.isPaused
-            
-//            let width : CGFloat = 1000, height : CGFloat = 1000
-//            let sc = PauseDialog(rect: CGRect(x: -(width/2), y: -(height/2), width: width, height: height), cornerRadius: 10)
-//            //let whatToDo : Published<Int>
-//            sc.dismiss = { sc.removeFromParent() }
-//            self.addChild(sc)
-            
-            //TransitionManager.shared.lastScene = self
-//            self.removeFromParent()
-//            self.removeAllChildren()
-            State.shared.levelState = self.levelState
-            TransitionManager.shared.transition(from: self, to: .Pause, transition: .crossFade(withDuration: 0.5))
-        }
-        
-        pause.position = CGPoint(x: 0, y: 0)
-        self.addChild(pause)
+    
         
         newPlayer()
         setLightEmitter()
         goal = FinishGoal.new()
         newPickup()
+        
+        loadPauseButton()
+
         
         let teste = SKShader(fileNamed: "shader.fsh")
         teste.uniforms = [SKUniform(name: "u_resolution", vectorFloat2: (SIMD2<Float>(repeating: 500)))]
@@ -137,6 +122,25 @@ class Phases: SKScene, SKPhysicsContactDelegate {
         
         player.addChild(light)
     }
+    
+    func loadPauseButton(){
+          
+          let label = SKLabelNode(text: " || ")
+          label.fontName = "Helvetica-Bold"
+          
+          let background = SKShapeNode(rectOf: CGSize(width: label.fontSize * CGFloat(label.text!.count), height: label.fontSize * 2), cornerRadius: 10)
+          background.lineWidth = 5
+          
+          
+          let pause = ButtonNode(image: background, label: label) {
+                State.shared.levelState = self.levelState
+                TransitionManager.shared.transition(from: self, to: .Pause, transition: .crossFade(withDuration: 0.5))
+            }
+        //print("x:\((self.view?.scene?.frame.width)! / 2 - (pause.image?.frame.width)!)")
+        //print("y: \((self.view?.scene?.frame.height)! / 2 - (pause.image?.frame.height)! * 2))")
+        pause.position = CGPoint(x:486, y: 1202)
+            self.addChild(pause)
+      }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered

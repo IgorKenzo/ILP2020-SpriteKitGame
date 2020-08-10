@@ -14,7 +14,14 @@ class LevelSelectorViewController: UICollectionViewController {
     var actionsDelegate : ActionsDelegate?
     
     override func viewDidLoad() {
-        
+        super.viewDidLoad()
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.barTintColor = .black
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isHidden = true
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
